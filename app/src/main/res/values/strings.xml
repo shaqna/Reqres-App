@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Reqres App</string>
+    <string name="belum_punya_akun_daftar"><font color="#BEBEBE">Don\'t have an account yet?</font> <font color="#002060">Sign Up</font></string>
+    <string name="sudah_punya_akun_daftar"><font color="#BEBEBE">Already have an account?</font> <font color="#002060">Sign In</font></string>
+    <string name="logout_question">Are you sure you want to exit the application?</string>
+    <string name="keluar_dari_aplikasi">Exit the application</string>
+    <string name="setuju">Log Out</string>
+    <string name="batalkan">Cancel</string>
+</resources>
