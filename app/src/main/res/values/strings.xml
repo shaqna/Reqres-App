@@ -6,4 +6,6 @@
     <string name="keluar_dari_aplikasi">Exit the application</string>
     <string name="setuju">Log Out</string>
     <string name="batalkan">Cancel</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_reqres">ReqresActivity</string>
 </resources>

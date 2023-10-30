@@ -9,12 +9,12 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
-class ReqresApp : Application() {
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
-            androidContext(this@ReqresApp)
+            androidContext(this@App)
             androidLogger(Level.ERROR)
             loadKoinModules(
                 listOf(

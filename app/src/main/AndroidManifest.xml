@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name=".ReqresApp"
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,6 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReqresApp"
         tools:targetApi="31">
+        <activity
+            android:name=".ReqresActivity"
+            android:exported="false"
+            android:label="@string/title_activity_reqres"
+            android:theme="@style/Theme.ReqresApp" />
         <activity
             android:name=".presentation.ui.detail.DetailUserActivity"
             android:exported="false" />
