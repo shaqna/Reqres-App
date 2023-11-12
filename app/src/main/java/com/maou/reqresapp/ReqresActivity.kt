@@ -4,12 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.maou.reqresapp.presentation.navigation.NavGraph
+import com.maou.reqresapp.presentation.navigation.Screen
+import com.maou.reqresapp.presentation.screens.auth.login.LoginScreen
 import com.maou.reqresapp.ui.theme.ReqresAppTheme
 
 class ReqresActivity : ComponentActivity() {
@@ -22,25 +29,31 @@ class ReqresActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    Main()
                 }
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun Main(
+        modifier: Modifier = Modifier,
+        navHostController: NavHostController = rememberNavController(),
+        startDestination: String = Screen.Login.name
+    ) {
+        Scaffold(
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ReqresAppTheme {
-        Greeting("Android")
+        ) { innerPadding ->
+            NavGraph(
+                navHostController = navHostController,
+                startDestination = startDestination,
+                innerPadding = innerPadding
+            )
+        }
     }
 }
+
+
+
+

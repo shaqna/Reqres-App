@@ -3,6 +3,7 @@ package com.maou.reqresapp
 import android.app.Application
 import com.maou.reqresapp.data.di.dataModule
 import com.maou.reqresapp.domain.di.domainModule
+import com.maou.reqresapp.presentation.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.loadKoinModules
@@ -19,7 +20,8 @@ class App : Application() {
             loadKoinModules(
                 listOf(
                     dataModule,
-                    domainModule
+                    domainModule,
+                    viewModelModule
                 )
             )
         }
