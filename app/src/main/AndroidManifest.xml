@@ -12,39 +12,21 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:enableOnBackInvokedCallback="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReqresApp"
-        tools:targetApi="31">
+        tools:targetApi="tiramisu">
         <activity
             android:name=".ReqresActivity"
-            android:exported="false"
-            android:label="@string/title_activity_reqres"
-            android:theme="@style/Theme.ReqresApp" />
-        <activity
-            android:name=".presentation.ui.detail.DetailUserActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.ui.settings.SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.ui.splash.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.ReqresApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".presentation.ui.create.CreateNewUserActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.ui.home.HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.ui.auth.AuthActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

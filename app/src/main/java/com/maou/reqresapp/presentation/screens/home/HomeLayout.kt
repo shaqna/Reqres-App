@@ -26,6 +26,7 @@ import com.maou.reqresapp.R
 import com.maou.reqresapp.domain.model.ReqresUser
 import com.maou.reqresapp.presentation.components.PersonItem
 import com.maou.reqresapp.presentation.mapper.toParcel
+import com.maou.reqresapp.presentation.model.ReqresUserParcel
 import com.maou.reqresapp.ui.theme.RoyalBlue
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -36,6 +37,7 @@ fun HomeLayout(
     state: HomeUiState,
     onCreateNewUserClicked: () -> Unit,
     onSettingsButtonClicked: () -> Unit,
+    onPersonItemClicked: (ReqresUserParcel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -89,10 +91,10 @@ fun HomeLayout(
             LazyColumn(
                 modifier = modifier.padding(innerPadding)
             ) {
-                items(items = state.users) { users ->
-                    PersonItem(person = users.toParcel(),
+                items(items = state.users) { user ->
+                    PersonItem(person = user.toParcel(),
                         onClick = {
-
+                            onPersonItemClicked(user.toParcel())
                         }
                     )
                 }

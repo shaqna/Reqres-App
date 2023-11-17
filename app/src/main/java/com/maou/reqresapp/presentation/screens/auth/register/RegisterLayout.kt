@@ -59,7 +59,7 @@ fun RegisterLayout(
         PasswordField(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 32.dp, start = 16.dp, end = 16.dp),
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             password = password,
             onChangeValue = onPasswordValueChange
         )
@@ -84,7 +84,7 @@ fun RegisterLayout(
         }
 
         ClickableText(
-            modifier = modifier.padding(top = 8.dp),
+            modifier = modifier.padding(top = 10.dp),
             text = AnnotatedString(stringResource(id = R.string.sudah_punya_akun_daftar)),
             onClick = {
                 onSignInTextClick()

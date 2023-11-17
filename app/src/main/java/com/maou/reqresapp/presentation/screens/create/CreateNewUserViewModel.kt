@@ -13,18 +13,24 @@ import org.koin.dsl.module
 
 class CreateNewUserViewModel(private val userUserCase: ReqresUsersUseCase): ViewModel() {
 
-    private val _uiState: MutableStateFlow<CreateUiState> = MutableStateFlow(CreateUiState.Init)
+    private val _uiState: MutableStateFlow<CreateUiState> = MutableStateFlow(CreateUiState())
     val uiState get() = _uiState
 
+    fun processIntent(intent: CreatePersonIntent) {
+        when(intent) {
+            is CreatePersonIntent.CreateNewPerson -> createNewUser(intent.name, intent.job)
+        }
+    }
+
     private fun showLoading() {
-        _uiState.value = CreateUiState.Loading(true)
+        _uiState.value = CreateUiState(isLoading = true)
     }
 
     private fun hideLoading() {
-        _uiState.value = CreateUiState.Loading(false)
+        _uiState.value = CreateUiState(isLoading = false)
     }
 
-    fun createNewUser(name: String, job: String) {
+    private fun createNewUser(name: String, job: String) {
         viewModelScope.launch {
             userUserCase.createUser(name, job)
                 .onStart {
@@ -32,15 +38,15 @@ class CreateNewUserViewModel(private val userUserCase: ReqresUsersUseCase): View
                 }
                 .catch {
                     hideLoading()
-                    _uiState.value = CreateUiState.Failure(it.message.toString())
+                    _uiState.value = CreateUiState(errMessage =  it.message.toString())
                 }
                 .collect { result ->
                     result.fold(
                         onSuccess = { newUser ->
-                            _uiState.value = CreateUiState.Success(newUser)
+                            _uiState.value = CreateUiState(newUser = newUser)
                         },
                         onFailure = {
-                            _uiState.value = CreateUiState.Failure(it.message.toString())
+                            _uiState.value = CreateUiState(errMessage = it.message.toString())
                         }
                     )
                 }
@@ -54,9 +60,12 @@ class CreateNewUserViewModel(private val userUserCase: ReqresUsersUseCase): View
     }
 }
 
-sealed interface CreateUiState {
-    object Init: CreateUiState
-    data class Loading(val isLoading: Boolean): CreateUiState
-    data class Success(val newUser: NewUser): CreateUiState
-    data class Failure(val message: String): CreateUiState
+data class CreateUiState(
+    val isLoading: Boolean = false,
+    val newUser: NewUser? = null,
+    val errMessage: String = ""
+)
+
+sealed interface CreatePersonIntent {
+    data class CreateNewPerson(val name: String, val job: String): CreatePersonIntent
 }

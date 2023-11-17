@@ -29,9 +29,9 @@ fun LoginLayout(
     onPasswordValueChange: (String) -> Unit,
     onSignInButtonClicked: () -> Unit,
     onSignUpTextClicked: () -> Unit,
-    onSuccessIntent: () -> Unit,
-    onFailedIntent: (String) -> Unit,
-    onLoading: @Composable () -> Unit,
+    onLoginSuccess: () -> Unit,
+    onLoginFailed: (String) -> Unit,
+    onLoginLoading: @Composable () -> Unit,
     state: LoginUiState,
     modifier: Modifier = Modifier
 ) {
@@ -74,22 +74,19 @@ fun LoginLayout(
                 Text(text = "Login", fontSize = 16.sp)
             }
         } else {
-            onLoading()
+            onLoginLoading()
         }
 
         if (state.errMessage.isNotBlank()) {
-            onFailedIntent(state.errMessage)
+            onLoginFailed(state.errMessage)
         }
 
         if(state.token.isNotBlank()) {
-            onSuccessIntent()
+            onLoginSuccess()
         }
 
-
-
-
         ClickableText(
-            modifier = modifier.padding(top = 8.dp),
+            modifier = modifier.padding(top = 10.dp),
             text = AnnotatedString(stringResource(id = R.string.belum_punya_akun_daftar)),
             onClick = {
                 onSignUpTextClicked()

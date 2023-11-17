@@ -9,7 +9,13 @@ import org.koin.dsl.module
 
 class SettingsViewModel(private val authUseCase: AuthUseCase): ViewModel() {
 
-    fun deleteToken() {
+    fun processIntent(intent: SettingsIntent) {
+        when(intent) {
+            SettingsIntent.LogoutIntent -> deleteToken()
+        }
+    }
+
+    private fun deleteToken() {
         viewModelScope.launch {
             authUseCase.deleteToken()
         }
@@ -20,4 +26,8 @@ class SettingsViewModel(private val authUseCase: AuthUseCase): ViewModel() {
             viewModelOf(::SettingsViewModel)
         }
     }
+}
+
+sealed interface SettingsIntent {
+    object LogoutIntent: SettingsIntent
 }
