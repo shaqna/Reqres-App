@@ -33,14 +33,14 @@ class LoginViewModel(
                 }
                 .catch {err ->
                     hideLoading()
-                    _uiState.value = LoginUiState.Error("Missing password")
+                    _uiState.value = LoginUiState.Error("User not found")
                 }
                 .collect { result ->
                     hideLoading()
                     result.fold(onSuccess = {token ->
                         _uiState.value = LoginUiState.Success(token)
                     }, onFailure = {
-                        _uiState.value = LoginUiState.Error("Missing password")
+                        _uiState.value = LoginUiState.Error("User not found")
                     })
 
                 }

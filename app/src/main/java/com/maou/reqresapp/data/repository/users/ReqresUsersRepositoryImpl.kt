@@ -1,7 +1,11 @@
 package com.maou.reqresapp.data.repository.users
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.maou.reqresapp.data.mapper.toDomainModel
 import com.maou.reqresapp.data.mapper.toListDomainModel
+import com.maou.reqresapp.data.paging.UsersPagingSource
 import com.maou.reqresapp.data.source.remote.request.users.NewUserRequest
 import com.maou.reqresapp.data.source.remote.service.ApiService
 import com.maou.reqresapp.domain.model.NewUser
@@ -16,15 +20,13 @@ import kotlinx.coroutines.flow.flowOn
 class ReqresUsersRepositoryImpl(
     private val apiService: ApiService
 ): ReqresUsersRepository {
-    override fun getUsers(): Flow<Result<List<ReqresUser>>> =
-        flow {
-            val response = apiService.getUsers()
-
-            emit(Result.success(response.data.toListDomainModel()))
-        }.catch {
-            emit(Result.failure(it))
-        }.flowOn(Dispatchers.IO)
-
+    override fun getUsers(): Flow<PagingData<ReqresUser>> =
+        Pager(
+            config = PagingConfig(pageSize = 2),
+            pagingSourceFactory = {
+                UsersPagingSource(apiService)
+            }
+        ).flow
     override fun createNewUser(name: String, job: String): Flow<Result<NewUser>> =
         flow {
             val request = NewUserRequest(name, job)

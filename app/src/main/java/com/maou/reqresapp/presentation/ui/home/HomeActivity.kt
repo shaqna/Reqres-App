@@ -17,8 +17,10 @@ import com.maou.reqresapp.presentation.ui.create.CreateNewUserActivity
 import com.maou.reqresapp.presentation.ui.detail.DetailUserActivity
 import com.maou.reqresapp.presentation.ui.detail.DetailUserActivity.Companion.REQRES_USER_PARCEL
 import com.maou.reqresapp.presentation.ui.settings.SettingsActivity
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 
@@ -51,7 +53,7 @@ class HomeActivity : AppCompatActivity() {
         setupToolbar()
         setButtonAction()
         fetchListUser()
-        observeUiState()
+//        observeUiState()
     }
 
 
@@ -87,41 +89,49 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun fetchListUser() {
-        viewModel.getUsers()
-    }
-
-    private fun observeUiState() {
-        viewModel.uiState.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .onEach { homeUiState ->
-                handleState(homeUiState)
-            }
-            .launchIn(lifecycleScope)
-    }
-
-    private fun handleState(state: HomeUiState) {
-        when (state) {
-            is HomeUiState.Failure -> {
-                showLoading(false)
-                showErrorMessage(state.message, true)
-                showToast(state.message)
-            }
-
-            HomeUiState.Init -> Unit
-            is HomeUiState.Loading -> {
-                showErrorMessage(isVisible = false)
-                showLoading(state.isLoading)
-            }
-
-            is HomeUiState.Success -> {
-                showLoading(false)
-                showErrorMessage(isVisible = false)
-
-                Log.d("MyTAG", "handleState: ${state.users.toString()}")
-
-                homeAdapter.setList(state.users)
+        lifecycleScope.launch {
+            viewModel.getUsers().collectLatest {users ->
+                homeAdapter.submitData(users)
             }
         }
     }
+
+//    private fun observeUiState() {
+//        viewModel.uiState.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+//            .onEach { homeUiState ->
+//                handleState(homeUiState)
+//            }
+//            .launchIn(lifecycleScope)
+//    }
+
+//    private fun handleState(state: HomeUiState) {
+//        when (state) {
+//            is HomeUiState.Failure -> {
+//                showLoading(false)
+//                showErrorMessage(state.message, true)
+//                showToast(state.message)
+//            }
+//
+//            HomeUiState.Init -> Unit
+//            is HomeUiState.Loading -> {
+//                showErrorMessage(isVisible = false)
+//                showLoading(state.isLoading)
+//            }
+//
+//            is HomeUiState.Success -> {
+//                showLoading(false)
+//                showErrorMessage(isVisible = false)
+//
+//                Log.d("MyTAG", "handleState: ${state.users.toString()}")
+//
+//                homeAdapter.apply {
+//                    addLoadStateListener { loadState ->
+//                        submitData(state.users)
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private fun showLoading(isLoading: Boolean) {
         binding.apply {

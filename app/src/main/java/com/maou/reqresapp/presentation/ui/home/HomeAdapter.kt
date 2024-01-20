@@ -6,24 +6,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.maou.reqresapp.databinding.UsersItemBinding
 import com.maou.reqresapp.domain.model.ReqresUser
 import com.maou.reqresapp.utils.bindImage
 import com.maou.reqresapp.utils.generateFullName
 
-class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter : PagingDataAdapter<ReqresUser,HomeAdapter.ViewHolder>(DiffCallBack) {
 
-    private val users = arrayListOf<ReqresUser>()
 
     var onItemClickListener: ((ReqresUser, ActivityOptionsCompat) -> Unit)? = null
-
-    fun setList(list: List<ReqresUser>) {
-        users.clear()
-        users.addAll(list)
-
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemBinding =
@@ -32,10 +27,11 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(users[position])
+        getItem(position)?.let { user ->
+            holder.bind(user)
+        }
     }
 
-    override fun getItemCount(): Int = users.size
 
     inner class ViewHolder(private val binding: UsersItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -60,5 +56,15 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
         }
     }
 
+    companion object {
+        val DiffCallBack = object: DiffUtil.ItemCallback<ReqresUser>() {
+            override fun areItemsTheSame(oldItem: ReqresUser, newItem: ReqresUser): Boolean =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: ReqresUser, newItem: ReqresUser): Boolean =
+                oldItem.id == newItem.id
+
+        }
+    }
 
 }

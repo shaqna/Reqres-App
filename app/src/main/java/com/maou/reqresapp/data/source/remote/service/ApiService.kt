@@ -11,6 +11,7 @@ import com.maou.reqresapp.data.source.remote.response.users.ReqresUsersResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -24,8 +25,11 @@ interface ApiService {
         @Body registerRequest: RegisterRequest
     ): RegisterResponse
 
-    @GET("api/users?per_page=12")
-    suspend fun getUsers(): BaseResponse<List<ReqresUsersResponse>>
+    @GET("api/users")
+    suspend fun getUsers(
+        @Query("page") page: Int? = null,
+        @Query("per_page") perPage: Int? = 6
+    ): BaseResponse<List<ReqresUsersResponse>>
 
     @POST("api/users")
     suspend fun createUser(
