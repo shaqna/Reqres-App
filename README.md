@@ -7,6 +7,7 @@ API : https://reqres.in/api/
 - Retrofit
 - MVVM with Clean Architecture
 - Koin Injection
+- Shared Preference
 
 - ## UI
 
