@@ -56,6 +56,12 @@ class HomeActivity : AppCompatActivity() {
 //        observeUiState()
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
+
 
     private fun setupAdapter() {
         with(binding) {
