@@ -2,10 +2,11 @@
 API : https://reqres.in/api/
 
 ## Software Development
-- Jetpack Compose
+- Kotlin
+- Paging3
 - Retrofit
-- MVI with Clean Architecture
-- Koin For Jetpack Compose
+- MVVM with Clean Architecture
+- Koin Injection
 
 - ## UI
 
