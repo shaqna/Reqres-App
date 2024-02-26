@@ -1,13 +1,27 @@
 # Reqres-App
+
+### Date created
+Nov, 2023
+
+### Description
+Reqres is simple android application. This application just for portfolio showing purpose
+
+## API source
 API : https://reqres.in/api/
 
 ## Software Development
-- Kotlin
-- Paging3
-- Retrofit
-- MVVM with Clean Architecture
-- Koin Injection
-- Shared Preference
+- Programming language
+  - Kotlin
+- Pagination
+  - Paging3
+- Remote client
+  - Retrofit
+- Architectiure pattern
+  - MVVM with Clean Architecture
+- Dependency Injection
+  - Koin Injection
+- Local datastore
+  - Shared Preference
 
 - ## UI
 
